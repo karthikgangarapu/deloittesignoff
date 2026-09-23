@@ -85,7 +85,7 @@
   .hero-name-text {
     font-family: 'Fraunces', Georgia, serif;
     font-weight: 700;
-    font-size: clamp(2.28rem, 4.8vw, 3.48rem);
+    font-size: clamp(1.949rem, 4.104vw, 2.975rem);
     letter-spacing: -0.01em;
     background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--violet), var(--cyan));
     background-size: 300% 100%;
@@ -107,14 +107,14 @@
   .hero-title {
     font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
     font-weight: 700;
-    font-size: clamp(3.96rem, 9.6vw, 7.08rem);
+    font-size: clamp(3.386rem, 8.208vw, 6.053rem);
     line-height: 1.04;
     letter-spacing: -0.01em;
     margin-bottom: 1.4rem;
   }
   .hero-title .line { display: block; }
-  .hero .lede { font-size: 1.5rem; line-height: 1.6; color: var(--muted); max-width: 44ch; margin-bottom: 2.4rem; }
-  .scroll-cue { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; font-size: 1.08rem; color: var(--muted); }
+  .hero .lede { font-size: 1.282rem; line-height: 1.6; color: var(--muted); max-width: 44ch; margin-bottom: 2.4rem; }
+  .scroll-cue { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; font-size: 0.923rem; color: var(--muted); }
   .scroll-cue svg { animation: bob 2.2s ease-in-out infinite; }
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
   @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
@@ -135,7 +135,7 @@
   .hero-badge-svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spinSlow 40s linear infinite; }
   @keyframes spinSlow { to { transform: rotate(360deg); } }
   .badge-ring-outer { stroke: var(--line); }
-  .badge-text { font-family: 'Audiowide', sans-serif; font-size: 16.8px; letter-spacing: 4px; fill: var(--cyan); }
+  .badge-text { font-family: 'Audiowide', sans-serif; font-size: 14.364px; letter-spacing: 4px; fill: var(--cyan); }
 
   .hero-badge-ring2 {
     position: absolute; inset: 40px; border-radius: 50%;
@@ -149,9 +149,9 @@
   }
 
   .hero-badge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  .hero-badge-years { font-family: 'Audiowide', 'Fraunces', serif; font-size: 1.38rem; color: var(--cream); letter-spacing: .03em; }
+  .hero-badge-years { font-family: 'Audiowide', 'Fraunces', serif; font-size: 1.18rem; color: var(--cream); letter-spacing: .03em; }
   .hero-badge-sub {
-    font-family: 'Audiowide', sans-serif; font-size: 1.26rem; margin-top: .4rem; letter-spacing: .08em;
+    font-family: 'Audiowide', sans-serif; font-size: 1.077rem; margin-top: .4rem; letter-spacing: .08em;
     background: linear-gradient(90deg, var(--cyan), var(--magenta));
     -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   }
@@ -160,9 +160,9 @@
   .section-head { max-width: 580px; margin: 0 auto 3rem; text-align: center; }
   .section-head h2 {
     font-family: 'Fraunces', serif; font-weight: 600;
-    font-size: clamp(2.4rem, 4.32vw, 3.24rem); margin-bottom: .6rem;
+    font-size: clamp(2.052rem, 3.694vw, 2.77rem); margin-bottom: .6rem;
   }
-  .section-head p { color: var(--muted); font-size: 1.34rem; }
+  .section-head p { color: var(--muted); font-size: 1.146rem; }
 
   /* ---------- Orbit ---------- */
   .orbit-section { padding: 5rem clamp(1.5rem, 6vw, 5rem); text-align: center; }
@@ -175,12 +175,12 @@
     background: var(--bg-panel); border: 1px solid var(--line); z-index: 2;
     box-shadow: 0 0 40px rgba(157, 92, 255, 0.25);
   }
-  .orbit-center .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 3.24rem; line-height: 1; }
-  .orbit-center .unit { font-size: 0.94rem; color: var(--muted); margin-top: .15rem; }
+  .orbit-center .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 2.77rem; line-height: 1; }
+  .orbit-center .unit { font-size: 0.804rem; color: var(--muted); margin-top: .15rem; }
 
   .orbit-badge {
     position: absolute; top: 50%; left: 50%; padding: .55rem 1rem; border-radius: 999px;
-    font-size: 1.08rem; font-weight: 700; white-space: nowrap; z-index: 3;
+    font-size: 0.923rem; font-weight: 700; white-space: nowrap; z-index: 3;
     background: var(--bg-panel); border: 1px solid var(--line);
     animation: orbitPath 30s linear infinite;
   }
@@ -230,15 +230,15 @@
     transition: background .4s, border-color .4s, box-shadow .4s;
   }
   .timeline-item.is-lit .timeline-dot { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 10px rgba(46, 242, 255, .8); }
-  .timeline-year { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.5rem; margin-bottom: .3rem; color: var(--muted); transition: color .4s; }
+  .timeline-year { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.282rem; margin-bottom: .3rem; color: var(--muted); transition: color .4s; }
   .timeline-item.is-lit .timeline-year { color: var(--cream); }
-  .timeline-text { color: var(--muted); font-size: 1.3rem; line-height: 1.55; max-width: 52ch; }
+  .timeline-text { color: var(--muted); font-size: 1.111rem; line-height: 1.55; max-width: 52ch; }
 
   /* ---------- Wall of thanks ---------- */
   #wall { padding: 3rem clamp(1.5rem, 6vw, 5rem) 2rem; }
   .wall-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
-  .wall-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(2.4rem, 4.32vw, 3.24rem); }
-  .wall-head .count { color: var(--muted); font-size: 1.26rem; }
+  .wall-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(2.052rem, 3.694vw, 2.77rem); }
+  .wall-head .count { color: var(--muted); font-size: 1.077rem; }
 
   .search-wrap {
     position: relative; max-width: 560px; margin: 0 auto 1.1rem;
@@ -255,7 +255,7 @@
     position: relative; z-index: 1; display: block; width: 100%; border: none; border-radius: 17px;
     padding: 1.15rem 1.4rem 1.15rem 3.3rem;
     background: var(--bg-deep); color: var(--cream);
-    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.54rem;
+    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.317rem;
   }
   #searchInput::placeholder { color: var(--muted); font-weight: 600; }
 
@@ -263,11 +263,11 @@
   .show-all-btn {
     display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.5rem; border-radius: 999px;
     border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--cream);
-    font-weight: 700; font-size: 1.26rem; transition: all .3s var(--ease-out);
+    font-weight: 700; font-size: 1.077rem; transition: all .3s var(--ease-out);
   }
   .show-all-btn:hover { border-color: var(--magenta); box-shadow: 0 0 26px rgba(255,62,201,0.28); background: rgba(255,255,255,0.07); }
 
-  .wall-hint { text-align: center; color: var(--muted); font-size: 1.3rem; margin: 0 0 2.5rem; }
+  .wall-hint { text-align: center; color: var(--muted); font-size: 1.111rem; margin: 0 0 2.5rem; }
   .wall-hint strong { color: var(--cream); font-weight: 700; }
 
   .wall-grid { column-count: 3; column-gap: 1.25rem; }
@@ -290,8 +290,8 @@
   }
   .card:hover, .card:focus-visible { transform: rotate(0deg) translateY(-3px); box-shadow: 0 14px 30px rgba(0,0,0,0.35); }
   .card .dot { position: absolute; top: 1.1rem; right: 1.2rem; width: 8px; height: 8px; border-radius: 50%; }
-  .card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.68rem; margin-bottom: .9rem; padding-right: 1.2rem; }
-  .card .cue { font-size: 1.14rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
+  .card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.436rem; margin-bottom: .9rem; padding-right: 1.2rem; }
+  .card .cue { font-size: 0.975rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
   .card .cue svg { flex-shrink: 0; opacity: .8; }
 
   .card--v0 { background: rgba(46,242,255,0.08); border: 1px solid rgba(46,242,255,0.32); }
@@ -321,12 +321,12 @@
   }
   .modal-overlay.is-open .modal-panel { transform: scale(1) translateY(0); opacity: 1; }
 
-  .modal-close { position: absolute; top: .9rem; right: 1rem; font-size: 1.8rem; line-height: 1; color: var(--muted); }
+  .modal-close { position: absolute; top: .9rem; right: 1rem; font-size: 1.539rem; line-height: 1; color: var(--muted); }
   .modal-close:hover { color: var(--cream); }
   .modal-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--magenta); margin-bottom: 1rem; }
-  .modal-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 2.1rem; margin-bottom: .3rem; opacity: 0; transform: translateY(10px); }
-  .modal-role { font-size: 1.02rem; color: var(--muted); margin-bottom: 1.2rem; opacity: 0; transform: translateY(10px); }
-  .modal-message { font-size: 1.38rem; line-height: 1.65; opacity: 0; transform: translateY(10px); }
+  .modal-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.795rem; margin-bottom: .3rem; opacity: 0; transform: translateY(10px); }
+  .modal-role { font-size: 0.872rem; color: var(--muted); margin-bottom: 1.2rem; opacity: 0; transform: translateY(10px); }
+  .modal-message { font-size: 1.18rem; line-height: 1.65; opacity: 0; transform: translateY(10px); }
 
   .modal-overlay.is-open .modal-name    { animation: modalIn .5s var(--ease-out) .15s both; }
   .modal-overlay.is-open .modal-role    { animation: modalIn .5s var(--ease-out) .25s both; }
@@ -343,13 +343,13 @@
   /* ---------- Farewell ---------- */
   .closing { padding: 4rem clamp(1.5rem, 6vw, 5rem) 3rem; max-width: 640px; margin: 0 auto; }
   .fw-line {
-    display: block; font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.7rem; line-height: 1.55;
+    display: block; font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.454rem; line-height: 1.55;
     opacity: 0; transform: translateY(16px); margin-bottom: .5rem;
     transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
   }
   .fw-line.is-visible { opacity: 1; transform: translateY(0); }
   .fw-line.fw-glow {
-    font-weight: 700; font-size: clamp(2.28rem, 5.52vw, 3.12rem); margin-top: .5rem;
+    font-weight: 700; font-size: clamp(1.949rem, 4.72vw, 2.668rem); margin-top: .5rem;
     background: linear-gradient(90deg, var(--cyan), var(--magenta));
     -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   }
@@ -358,7 +358,7 @@
     0%, 100% { filter: drop-shadow(0 0 10px rgba(255,62,201,0.35)); }
     50%      { filter: drop-shadow(0 0 26px rgba(46,242,255,0.55)); }
   }
-  .fw-line.sign { margin-top: 1.8rem; color: var(--muted); font-size: 1.38rem; font-weight: 600; font-family: 'Manrope', sans-serif; }
+  .fw-line.sign { margin-top: 1.8rem; color: var(--muted); font-size: 1.18rem; font-weight: 600; font-family: 'Manrope', sans-serif; }
   @media (prefers-reduced-motion: reduce) {
     .fw-line { transition: opacity .4s ease; transform: none; }
     .fw-line.fw-glow.is-visible { animation: none; filter: drop-shadow(0 0 16px rgba(255,62,201,0.45)); }
@@ -366,12 +366,12 @@
 
   /* ---------- Contact ---------- */
   .contact { padding: 1rem clamp(1.5rem, 6vw, 5rem) 6rem; max-width: 640px; margin: 0 auto; text-align: center; }
-  .contact-lead { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.58rem; margin-bottom: 1.4rem; color: var(--cream); }
+  .contact-lead { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.351rem; margin-bottom: 1.4rem; color: var(--cream); }
   .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem; }
   .contact-link {
     display: inline-flex; align-items: center; gap: .55rem; padding: .7rem 1.2rem; border-radius: 999px;
     border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--cream);
-    font-size: 1.22rem; font-weight: 600; text-decoration: none; transition: all .3s var(--ease-out);
+    font-size: 1.043rem; font-weight: 600; text-decoration: none; transition: all .3s var(--ease-out);
   }
   .contact-link svg { flex-shrink: 0; opacity: .85; }
   .contact-link:nth-child(1):hover { border-color: var(--cyan); box-shadow: 0 0 22px rgba(46,242,255,0.25); }
