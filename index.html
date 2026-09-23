@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Five Years, Thank You — Karthik Gangarapu</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  @property --angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+
+    --bg-deep:  #07070E;
+    --bg-panel: #131327;
+    --cyan:     #2EF2FF;
+    --magenta:  #FF3EC9;
+    --violet:   #9D5CFF;
+    --lime:     #8CFF6B;
+    --rose:     #FF4D6D;
+    --cream:    #F3F5FF;
+    --muted:    #8B92BE;
+    --line:     rgba(243,245,255,0.14);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: radial-gradient(ellipse 120% 80% at 50% 0%, #0F0F20 0%, var(--bg-deep) 60%);
+    background-color: var(--bg-deep);
+    background-attachment: fixed;
+    color: var(--cream);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
+  }
+  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  h1, h2, h3, p { margin: 0; }
+
+  /* ---------- Background layers ---------- */
+  #bgCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+  .grain {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    opacity: 0.035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---------- Load-in reveal (hero) ---------- */
+  .reveal-load { opacity: 0; transform: translateY(22px); animation: fadeUp .8s var(--ease-out) var(--d, 0s) both; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-load { transform: none; animation: fadeIn .4s ease var(--d, 0s) both; }
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transform: none; transition: opacity .4s ease; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; min-height: 92vh; display: flex; align-items: center; padding: 4rem clamp(1.5rem, 6vw, 5rem); }
+  .hero-content { max-width: 660px; position: relative; z-index: 1; }
+  .hero-name { margin-bottom: 1.2rem; }
+  .hero-name-text {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.28rem, 4.8vw, 3.48rem);
+    letter-spacing: -0.01em;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--violet), var(--cyan));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 26px rgba(255,62,201,0.35));
+    display: inline-block;
+    animation: gradientShift 6s ease-in-out infinite;
+  }
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-name-text { animation: none; } }
+
+  .hero-title {
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: clamp(3.96rem, 9.6vw, 7.08rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.4rem;
+  }
+  .hero-title .line { display: block; }
+  .hero .lede { font-size: 1.5rem; line-height: 1.6; color: var(--muted); max-width: 44ch; margin-bottom: 2.4rem; }
+  .scroll-cue { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; font-size: 1.08rem; color: var(--muted); }
+  .scroll-cue svg { animation: bob 2.2s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
+
+  /* ---------- Hero Deloitte badge (right side, wide screens) ---------- */
+  .hero-badge { position: absolute; right: clamp(1rem, 4vw, 4rem); top: 50%; transform: translateY(-50%);
+    width: 320px; height: 320px; display: none; }
+  @media (min-width: 1050px) { .hero-badge { display: block; } }
+
+  .hero-badge-glow {
+    position: absolute; inset: -14px; border-radius: 50%; z-index: -1;
+    background: radial-gradient(circle, rgba(255,62,201,0.24), rgba(46,242,255,0.14) 45%, transparent 72%);
+    filter: blur(16px);
+    animation: badgePulse 4s ease-in-out infinite;
+  }
+  @keyframes badgePulse { 0%, 100% { transform: scale(0.94); opacity: .75; } 50% { transform: scale(1.08); opacity: 1; } }
+
+  .hero-badge-svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spinSlow 40s linear infinite; }
+  @keyframes spinSlow { to { transform: rotate(360deg); } }
+  .badge-ring-outer { stroke: var(--line); }
+  .badge-text { font-family: 'Audiowide', sans-serif; font-size: 16.8px; letter-spacing: 4px; fill: var(--cyan); }
+
+  .hero-badge-ring2 {
+    position: absolute; inset: 40px; border-radius: 50%;
+    border: 2px dashed rgba(157,92,255,0.65);
+    animation: spinReverse 26s linear infinite;
+  }
+  @keyframes spinReverse { to { transform: rotate(-360deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-badge-glow, .hero-badge-ring2, .hero-badge-svg { animation: none; }
+  }
+
+  .hero-badge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .hero-badge-years { font-family: 'Audiowide', 'Fraunces', serif; font-size: 1.38rem; color: var(--cream); letter-spacing: .03em; }
+  .hero-badge-sub {
+    font-family: 'Audiowide', sans-serif; font-size: 1.26rem; margin-top: .4rem; letter-spacing: .08em;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  }
+
+  /* ---------- Section head (shared) ---------- */
+  .section-head { max-width: 580px; margin: 0 auto 3rem; text-align: center; }
+  .section-head h2 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: clamp(2.4rem, 4.32vw, 3.24rem); margin-bottom: .6rem;
+  }
+  .section-head p { color: var(--muted); font-size: 1.34rem; }
+
+  /* ---------- Orbit ---------- */
+  .orbit-section { padding: 5rem clamp(1.5rem, 6vw, 5rem); text-align: center; }
+  .orbit-wrap { position: relative; width: 320px; height: 320px; margin: 0 auto; }
+  @media (max-width: 480px) { .orbit-wrap { transform: scale(0.72); } }
+
+  .orbit-center {
+    position: absolute; inset: 0; margin: auto; width: 118px; height: 118px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--bg-panel); border: 1px solid var(--line); z-index: 2;
+    box-shadow: 0 0 40px rgba(157, 92, 255, 0.25);
+  }
+  .orbit-center .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 3.24rem; line-height: 1; }
+  .orbit-center .unit { font-size: 0.94rem; color: var(--muted); margin-top: .15rem; }
+
+  .orbit-badge {
+    position: absolute; top: 50%; left: 50%; padding: .55rem 1rem; border-radius: 999px;
+    font-size: 1.08rem; font-weight: 700; white-space: nowrap; z-index: 3;
+    background: var(--bg-panel); border: 1px solid var(--line);
+    animation: orbitPath 30s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) { .orbit-badge { animation: none; } }
+
+  .badge-aws      { color: var(--cyan);    transform: translate(-50%, -50%) translate(130px, 0px);       animation-delay: 0s; }
+  .badge-azure    { color: var(--violet);  transform: translate(-50%, -50%) translate(40.2px, 123.6px);  animation-delay: -6s; }
+  .badge-gcp      { color: var(--lime);    transform: translate(-50%, -50%) translate(-105.1px, 76.4px); animation-delay: -12s; }
+  .badge-datadog  { color: var(--magenta); transform: translate(-50%, -50%) translate(-105.1px, -76.4px);animation-delay: -18s; }
+  .badge-auto     { color: var(--rose);    transform: translate(-50%, -50%) translate(40.2px, -123.6px); animation-delay: -24s; }
+
+  @keyframes orbitPath {
+    0.00%  { transform: translate(-50%, -50%) translate(130.0px, 0.0px); }
+    6.25%  { transform: translate(-50%, -50%) translate(120.2px, 49.8px); }
+    12.50% { transform: translate(-50%, -50%) translate(91.9px, 91.9px); }
+    18.75% { transform: translate(-50%, -50%) translate(49.8px, 120.2px); }
+    25.00% { transform: translate(-50%, -50%) translate(0.0px, 130.0px); }
+    31.25% { transform: translate(-50%, -50%) translate(-49.8px, 120.2px); }
+    37.50% { transform: translate(-50%, -50%) translate(-91.9px, 91.9px); }
+    43.75% { transform: translate(-50%, -50%) translate(-120.2px, 49.8px); }
+    50.00% { transform: translate(-50%, -50%) translate(-130.0px, 0.0px); }
+    56.25% { transform: translate(-50%, -50%) translate(-120.2px, -49.8px); }
+    62.50% { transform: translate(-50%, -50%) translate(-91.9px, -91.9px); }
+    68.75% { transform: translate(-50%, -50%) translate(-49.8px, -120.2px); }
+    75.00% { transform: translate(-50%, -50%) translate(0.0px, -130.0px); }
+    81.25% { transform: translate(-50%, -50%) translate(49.8px, -120.2px); }
+    87.50% { transform: translate(-50%, -50%) translate(91.9px, -91.9px); }
+    93.75% { transform: translate(-50%, -50%) translate(120.2px, -49.8px); }
+    100%   { transform: translate(-50%, -50%) translate(130.0px, 0.0px); }
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline-section { padding: 2rem clamp(1.5rem, 6vw, 5rem) 5rem; }
+  .timeline { position: relative; max-width: 640px; margin: 0 auto; }
+  .timeline-track, .timeline-fill { position: absolute; top: 0; left: 6px; width: 2px; height: 100%; }
+  .timeline-track { background: var(--line); }
+  .timeline-fill {
+    background: linear-gradient(to bottom, var(--cyan), var(--violet), var(--magenta));
+    transform-origin: top; transform: scaleY(0);
+    box-shadow: 0 0 12px rgba(157, 92, 255, 0.6);
+  }
+  .timeline-item { position: relative; padding: 0 0 2.6rem 2.6rem; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: 0; top: .3rem; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--bg-panel); border: 2px solid var(--line);
+    transition: background .4s, border-color .4s, box-shadow .4s;
+  }
+  .timeline-item.is-lit .timeline-dot { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 10px rgba(46, 242, 255, .8); }
+  .timeline-year { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.5rem; margin-bottom: .3rem; color: var(--muted); transition: color .4s; }
+  .timeline-item.is-lit .timeline-year { color: var(--cream); }
+  .timeline-text { color: var(--muted); font-size: 1.3rem; line-height: 1.55; max-width: 52ch; }
+
+  /* ---------- Wall of thanks ---------- */
+  #wall { padding: 3rem clamp(1.5rem, 6vw, 5rem) 2rem; }
+  .wall-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+  .wall-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(2.4rem, 4.32vw, 3.24rem); }
+  .wall-head .count { color: var(--muted); font-size: 1.26rem; }
+
+  .search-wrap {
+    position: relative; max-width: 560px; margin: 0 auto 1.1rem;
+    border-radius: 20px; padding: 3px;
+    background: conic-gradient(from var(--angle), var(--cyan), var(--magenta), var(--violet), var(--cyan));
+    animation: rotateBorder 5s linear infinite;
+  }
+  @keyframes rotateBorder { to { --angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .search-wrap { animation: none; } }
+  .search-wrap:focus-within { filter: drop-shadow(0 0 26px rgba(157,92,255,0.4)); }
+
+  .search-icon { position: absolute; z-index: 2; left: 1.5rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+  #searchInput {
+    position: relative; z-index: 1; display: block; width: 100%; border: none; border-radius: 17px;
+    padding: 1.15rem 1.4rem 1.15rem 3.3rem;
+    background: var(--bg-deep); color: var(--cream);
+    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.54rem;
+  }
+  #searchInput::placeholder { color: var(--muted); font-weight: 600; }
+
+  .show-all-wrap { text-align: center; margin-bottom: 1.6rem; }
+  .show-all-btn {
+    display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.5rem; border-radius: 999px;
+    border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--cream);
+    font-weight: 700; font-size: 1.26rem; transition: all .3s var(--ease-out);
+  }
+  .show-all-btn:hover { border-color: var(--magenta); box-shadow: 0 0 26px rgba(255,62,201,0.28); background: rgba(255,255,255,0.07); }
+
+  .wall-hint { text-align: center; color: var(--muted); font-size: 1.3rem; margin: 0 0 2.5rem; }
+  .wall-hint strong { color: var(--cream); font-weight: 700; }
+
+  .wall-grid { column-count: 3; column-gap: 1.25rem; }
+  @media (max-width: 900px) { .wall-grid { column-count: 2; } }
+  @media (max-width: 560px) { .wall-grid { column-count: 1; } }
+
+  .card {
+    break-inside: avoid; display: block; width: 100%; text-align: left; margin: 0 0 1.25rem;
+    padding: 1.4rem 1.4rem 1.5rem; border-radius: 16px; position: relative;
+    opacity: 0;
+    animation: cardIn .5s var(--ease-out) var(--cd, 0s) both;
+    transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: rotate(var(--rot, 0deg)) translateY(18px); }
+    to   { opacity: 1; transform: rotate(var(--rot, 0deg)) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card { animation: fadeIn .3s ease both; transform: rotate(var(--rot, 0deg)); }
+  }
+  .card:hover, .card:focus-visible { transform: rotate(0deg) translateY(-3px); box-shadow: 0 14px 30px rgba(0,0,0,0.35); }
+  .card .dot { position: absolute; top: 1.1rem; right: 1.2rem; width: 8px; height: 8px; border-radius: 50%; }
+  .card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.68rem; margin-bottom: .9rem; padding-right: 1.2rem; }
+  .card .cue { font-size: 1.14rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
+  .card .cue svg { flex-shrink: 0; opacity: .8; }
+
+  .card--v0 { background: rgba(46,242,255,0.08); border: 1px solid rgba(46,242,255,0.32); }
+  .card--v0 .dot { background: var(--cyan); }
+  .card--v1 { background: rgba(255,62,201,0.08); border: 1px solid rgba(255,62,201,0.32); }
+  .card--v1 .dot { background: var(--magenta); }
+  .card--v2 { background: var(--bg-panel); border: 1px solid var(--line); }
+  .card--v2 .dot { background: var(--violet); }
+
+  #emptyState { display: none; color: var(--muted); padding: 2rem 0; text-align: center; }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem; background: rgba(6,5,16,0); backdrop-filter: blur(0px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s var(--ease-out), background .4s var(--ease-out), backdrop-filter .4s var(--ease-out);
+  }
+  .modal-overlay.is-open { opacity: 1; pointer-events: auto; background: rgba(6,5,16,0.68); backdrop-filter: blur(6px); }
+
+  .modal-panel {
+    position: relative; max-width: 440px; width: 100%; background: var(--bg-panel);
+    border: 1px solid var(--line); border-radius: 20px; padding: 2.4rem 2rem 2.2rem;
+    transform: scale(.9) translateY(14px); opacity: 0;
+    transition: transform .45s var(--ease-out), opacity .45s var(--ease-out);
+    max-height: 80vh; overflow-y: auto;
+  }
+  .modal-overlay.is-open .modal-panel { transform: scale(1) translateY(0); opacity: 1; }
+
+  .modal-close { position: absolute; top: .9rem; right: 1rem; font-size: 1.8rem; line-height: 1; color: var(--muted); }
+  .modal-close:hover { color: var(--cream); }
+  .modal-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--magenta); margin-bottom: 1rem; }
+  .modal-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 2.1rem; margin-bottom: .3rem; opacity: 0; transform: translateY(10px); }
+  .modal-role { font-size: 1.02rem; color: var(--muted); margin-bottom: 1.2rem; opacity: 0; transform: translateY(10px); }
+  .modal-message { font-size: 1.38rem; line-height: 1.65; opacity: 0; transform: translateY(10px); }
+
+  .modal-overlay.is-open .modal-name    { animation: modalIn .5s var(--ease-out) .15s both; }
+  .modal-overlay.is-open .modal-role    { animation: modalIn .5s var(--ease-out) .25s both; }
+  .modal-overlay.is-open .modal-message { animation: modalIn .5s var(--ease-out) .35s both; }
+  @keyframes modalIn { to { opacity: 1; transform: translateY(0); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .modal-overlay, .modal-panel, .modal-name, .modal-role, .modal-message {
+      transition: opacity .25s ease; animation: none !important; transform: none !important;
+    }
+  }
+  body.modal-open { overflow: hidden; }
+
+  /* ---------- Farewell ---------- */
+  .closing { padding: 4rem clamp(1.5rem, 6vw, 5rem) 3rem; max-width: 640px; margin: 0 auto; }
+  .fw-line {
+    display: block; font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.7rem; line-height: 1.55;
+    opacity: 0; transform: translateY(16px); margin-bottom: .5rem;
+    transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+  }
+  .fw-line.is-visible { opacity: 1; transform: translateY(0); }
+  .fw-line.fw-glow {
+    font-weight: 700; font-size: clamp(2.28rem, 5.52vw, 3.12rem); margin-top: .5rem;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .fw-line.fw-glow.is-visible { animation: glowPulse 3.6s ease-in-out .6s infinite; }
+  @keyframes glowPulse {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(255,62,201,0.35)); }
+    50%      { filter: drop-shadow(0 0 26px rgba(46,242,255,0.55)); }
+  }
+  .fw-line.sign { margin-top: 1.8rem; color: var(--muted); font-size: 1.38rem; font-weight: 600; font-family: 'Manrope', sans-serif; }
+  @media (prefers-reduced-motion: reduce) {
+    .fw-line { transition: opacity .4s ease; transform: none; }
+    .fw-line.fw-glow.is-visible { animation: none; filter: drop-shadow(0 0 16px rgba(255,62,201,0.45)); }
+  }
+
+  /* ---------- Contact ---------- */
+  .contact { padding: 1rem clamp(1.5rem, 6vw, 5rem) 6rem; max-width: 640px; margin: 0 auto; text-align: center; }
+  .contact-lead { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.58rem; margin-bottom: 1.4rem; color: var(--cream); }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: .55rem; padding: .7rem 1.2rem; border-radius: 999px;
+    border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--cream);
+    font-size: 1.22rem; font-weight: 600; text-decoration: none; transition: all .3s var(--ease-out);
+  }
+  .contact-link svg { flex-shrink: 0; opacity: .85; }
+  .contact-link:nth-child(1):hover { border-color: var(--cyan); box-shadow: 0 0 22px rgba(46,242,255,0.25); }
+  .contact-link:nth-child(2):hover { border-color: var(--magenta); box-shadow: 0 0 22px rgba(255,62,201,0.25); }
+  .contact-link:nth-child(3):hover { border-color: var(--violet); box-shadow: 0 0 22px rgba(157,92,255,0.25); }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="hero-content">
+    <p class="hero-name reveal-load" style="--d:0s"><span class="hero-name-text">Karthik Gangarapu</span></p>
+    <h1 class="hero-title">
+      <span class="line reveal-load" style="--d:.3s">Five Years.</span>
+      <span class="line reveal-load" style="--d:.55s">Countless Memories.</span>
+    </h1>
+    <p class="lede reveal-load" style="--d:.9s">Before I go, one place to say thank you properly &mdash; to the people, the projects, and everything in between.</p>
+    <a href="#orbit" class="scroll-cue reveal-load" style="--d:1.25s">
+      Scroll to begin
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+    </a>
+  </div>
+
+  <div class="hero-badge" aria-hidden="true">
+    <div class="hero-badge-glow"></div>
+    <svg viewBox="0 0 220 220" class="hero-badge-svg">
+      <defs><path id="badgeCircle" d="M110,110 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
+      <circle class="badge-ring-outer" cx="110" cy="110" r="104" fill="none" stroke-width="1.5"/>
+      <text class="badge-text">
+        <textPath href="#badgeCircle" startOffset="0%">THANK YOU DELOITTE &#8226; THANK YOU DELOITTE &#8226; </textPath>
+      </text>
+    </svg>
+    <div class="hero-badge-ring2"></div>
+    <div class="hero-badge-center">
+      <span class="hero-badge-years">2021&mdash;2026</span>
+      <span class="hero-badge-sub">Deloitte</span>
+    </div>
+  </div>
+</header>
+
+<section class="orbit-section" id="orbit">
+  <div class="section-head reveal">
+    <h2>Five years across the cloud</h2>
+    <p>AWS, Azure, GCP, Datadog, and a lot of automation in between.</p>
+  </div>
+  <div class="orbit-wrap reveal">
+    <div class="orbit-center">
+      <span class="num">5</span>
+      <span class="unit">years</span>
+    </div>
+    <div class="orbit-badge badge-aws"><span>AWS</span></div>
+    <div class="orbit-badge badge-azure"><span>Azure</span></div>
+    <div class="orbit-badge badge-gcp"><span>GCP</span></div>
+    <div class="orbit-badge badge-datadog"><span>Datadog</span></div>
+    <div class="orbit-badge badge-auto"><span>Automation</span></div>
+  </div>
+</section>
+
+<section class="timeline-section" id="journey">
+  <div class="section-head reveal">
+    <h2>The journey</h2>
+    <p>A rough map of how we got here &mdash; 2021 to 2026.</p>
+  </div>
+  <div class="timeline" id="timeline">
+    <div class="timeline-track"></div>
+    <div class="timeline-fill" id="timelineFill"></div>
+    <div class="timeline-items" id="timelineItems"></div>
+  </div>
+</section>
+
+<main id="wall">
+  <div class="wall-head reveal">
+    <h2>People who made it good</h2>
+    <span class="count"><span id="peopleCount">0</span> people who made these five years good</span>
+  </div>
+  <div class="search-wrap reveal">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="searchInput" type="text" placeholder="Search your name&hellip;" aria-label="Search by name">
+  </div>
+  <div class="show-all-wrap reveal">
+    <button id="showAllBtn" class="show-all-btn" type="button">Show all <span id="totalCountBtn">0</span> people</button>
+  </div>
+  <p class="wall-hint reveal">The closest few are pinned here &mdash; search a name, or see everyone at once.</p>
+  <div class="wall-grid" id="wallGrid"></div>
+  <p id="emptyState">No one matches that search &mdash; try a different name.</p>
+</main>
+
+<footer class="closing" id="farewell">
+  <p class="fw-line">This page has over a hundred names on it, and it's still not everyone.</p>
+  <p class="fw-line">Five years is a long time to be surrounded by good people &mdash; and somehow, I was.</p>
+  <p class="fw-line">To everyone here: thank you for the help, the patience, the laughs, and the lessons I didn't know I needed.</p>
+  <p class="fw-line">Wherever the next chapter takes me, I'm taking all of this with me.</p>
+  <p class="fw-line fw-glow">Thank you, truly.</p>
+  <p class="fw-line sign" id="signature">&mdash; Karthik Gangarapu</p>
+</footer>
+
+<section class="contact">
+  <p class="contact-lead">Let's stay in touch</p>
+  <div class="contact-links">
+    <a class="contact-link" href="https://www.linkedin.com/in/karthik321/" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+      LinkedIn
+    </a>
+    <a class="contact-link" href="mailto:karthikganga321@gmail.com">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+      karthikganga321@gmail.com
+    </a>
+    <a class="contact-link" href="tel:+918978495662">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      +91 89784 95662
+    </a>
+  </div>
+</section>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <button class="modal-close" id="modalClose" aria-label="Close" type="button">&times;</button>
+    <span class="modal-dot" aria-hidden="true"></span>
+    <h3 id="modalName" class="modal-name"></h3>
+    <p id="modalRole" class="modal-role"></p>
+    <p id="modalMessage" class="modal-message"></p>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 0 = network fully dispersed (normal), 1 = fully converged/faded — driven live by scroll position.
+  let convergeProgress = 0;
+
+  /* ================= Background network canvas ================= */
+  try {
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+
+    function resize() {
+      const oldW = w, oldH = h;
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      // keep particles proportionally placed if the window changes size
+      if (oldW && oldH && particles.length) {
+        const sx = w / oldW, sy = h / oldH;
+        particles.forEach(pt => { pt.hx *= sx; pt.hy *= sy; });
+      }
+    }
+    function makeParticles() {
+      const count = Math.max(28, Math.min(70, Math.floor((w * h) / 24000)));
+      particles = Array.from({ length: count }, () => ({
+        hx: Math.random() * w,       // fixed home position
+        hy: Math.random() * h,
+        r: 1.6 + Math.random() * 2.2,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.65 + Math.random() * 0.6
+      }));
+    }
+    resize();
+    makeParticles();
+    window.addEventListener('resize', resize);
+
+    function drawStatic() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.shadowBlur = 14;
+      ctx.shadowColor = 'rgba(46,242,255,0.9)';
+      particles.forEach(pt => {
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(46,242,255,0.55)';
+        ctx.arc(pt.hx, pt.hy, pt.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.shadowBlur = 0;
+    }
+
+    let startTime = null;
+
+    // Every particle's on-screen position is computed fresh each frame purely from
+    // (elapsed time, live scroll progress) — nothing accumulates, so scrolling up
+    // always lands back exactly where it started, at any speed, in either direction.
+    function step(now) {
+      if (startTime === null) startTime = now;
+      const t = (now - startTime) / 1000;
+
+      ctx.clearRect(0, 0, w, h);
+      const cx = w / 2, cy = h / 2;
+      const p = convergeProgress;
+      const fade = 1 - p;
+
+      particles.forEach(pt => {
+        const jx = Math.sin(t * pt.speed + pt.phase) * 11;
+        const jy = Math.cos(t * pt.speed * 0.85 + pt.phase) * 11;
+        const ax = pt.hx + jx;
+        const ay = pt.hy + jy;
+        pt.x = ax + (cx - ax) * p;
+        pt.y = ay + (cy - ay) * p;
+      });
+
+      ctx.shadowBlur = 0;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.strokeStyle = `rgba(157,92,255,${0.3 * (1 - dist / 150) * fade})`;
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      ctx.shadowBlur = 16;
+      ctx.shadowColor = 'rgba(46,242,255,0.95)';
+      particles.forEach(pt => {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(46,242,255,${0.9 * fade})`;
+        ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.shadowBlur = 0;
+
+      requestAnimationFrame(step);
+    }
+
+    if (reduceMotion) {
+      drawStatic();
+    } else {
+      requestAnimationFrame(step);
+    }
+  } catch (e) { /* decorative background only — fail silently */ }
+
+  /* ================= Generic scroll reveal ================= */
+  function observeReveal(container) {
+    const els = container.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  }
+  observeReveal(document);
+
+  /* ================= Timeline ================= */
+  const TIMELINE = [
+    { year: "2021", text: "Walked in as a fresher in CloudOps, and AWS became the first cloud that ever felt like home." },
+    { year: "2022", text: "Automation crept in quietly, one script at a time, until it was simply how the work got done." },
+    { year: "2023", text: "GCP joined the story, and the toolkit quietly grew wider." },
+    { year: "2024", text: "Went deeper into automation, and Azure joined the mix &mdash; three clouds, one growing craft." },
+    { year: "2025", text: "Took on bigger, messier problems, and mostly enjoyed it." },
+    { year: "2026", text: "Five years in, and it's time for a new chapter." }
+  ];
+
+  const timelineItemsEl = document.getElementById('timelineItems');
+  timelineItemsEl.innerHTML = TIMELINE.map(t => `
+    <div class="timeline-item reveal">
+      <span class="timeline-dot"></span>
+      <p class="timeline-year">${t.year}</p>
+      <p class="timeline-text">${t.text}</p>
+    </div>`).join('');
+  observeReveal(timelineItemsEl);
+
+  const timelineEl = document.getElementById('timeline');
+  const timelineFill = document.getElementById('timelineFill');
+  const timelineItemEls = Array.from(timelineItemsEl.querySelectorAll('.timeline-item'));
+
+  function updateConverge() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    convergeProgress = docHeight > 0 ? Math.max(0, Math.min(1, scrollTop / docHeight)) : 0;
+  }
+
+  let ticking = false;
+  function updateTimeline() {
+    const rect = timelineEl.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const progress = Math.max(0, Math.min(1, (vh * 0.55 - rect.top) / rect.height));
+    timelineFill.style.transform = `scaleY(${progress})`;
+    timelineItemEls.forEach((item, i) => {
+      const threshold = i / Math.max(1, timelineItemEls.length - 1);
+      item.classList.toggle('is-lit', progress >= threshold - 0.02);
+    });
+  }
+  function onScroll() {
+    updateTimeline();
+    updateConverge();
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+  onScroll();
+
+  /* ================= Team wall + modal ================= */
+  const TEAM = [
+    { name: "Sridhar Suri", role: "Leader", message: "As the one steering this whole project, you set a tone from the top that made it a genuinely good place to work for five years. Thank you for leading it well.", featured: false },
+    { name: "Sridhar BS", role: "Senior Manager", message: "You've had a hand in making sure everything in this project actually works, down to the details most people never see. Thank you for that quiet, constant care.", featured: false },
+    { name: "Sandeep Kulkarni", role: "Senior Manager", message: "Sitting right at the client conversations and still keeping things smooth on our end couldn't have been easy. Thank you for holding that line so well.", featured: false },
+    { name: "Debajyoti Ghosh", role: "Senior Manager", message: "Managing the client relationship directly while keeping the team steady is a harder balance than it looks. Thank you for making it look easy anyway.", featured: false },
+    { name: "Srinivasu Raju Gorinta", role: "Manager", message: "You're the reason I got onto this project back in 2021, and you've kept things running smoothly ever since. Thank you for opening that door, and for everything after it.", featured: false },
+    { name: "Alluri Chandra Sekhar Varma", role: "Manager", message: "You've had a real knack for keeping our work organized and moving, even when things got messy. Thank you for that steady hand.", featured: false },
+    { name: "Moizuddin Mohammed", role: "Manager", message: "Even though you've since moved on from the project, the way you kept things streamlined while you were here left a mark. Thank you for the foundation you helped build.", featured: false },
+    { name: "Sivabalu P D N", role: "Manager", message: "You've moved on from the project now, but the smoother workflows you set up are still paying off. Thank you for that.", featured: false },
+    { name: "Noel Arzadon", role: "Manager", message: "Running NetworkOps from the US and still keeping a firm handle on everything here takes real skill. Thank you for steering that ship so well.", featured: false },
+    { name: "Karthik B G", role: "Manager", message: "You're the person everyone quietly relies on for anything NetworkOps, a real guru in that space. Thank you for always having the answer.", featured: false },
+    { name: "Arundeep Kang", role: "Manager", message: "When it comes to ContainerOps, you're simply the person who knows it best. Thank you for sharing that expertise so generously.", featured: false },
+    { name: "Matt Liedike", role: "Senior Lead", message: "You seem to know a little bit about everything in this project, which has made you an incredible person to have as an architect. Thank you for always being the one with the answer, no matter the question.", featured: false },
+    { name: "Zach Petryszyn", role: "Senior Lead", message: "You were the architect who somehow knew everything, and the project felt a little less certain after you left. Thank you for all the knowledge you left behind.", featured: false },
+    { name: "Sathivada Suresh", role: "Manager", message: "You've been the closest person to me through all of this, someone who's stuck around till today no matter what. I've been your go-to person, and by your own words, your saviour more than once, and honestly, that trust means more to me than you know. Thank you for being exactly that kind of person.", featured: true },
+    { name: "SR Pruthvi", role: "Lead", message: "You've been one of the closest people to me through these five years, still here till today. Being your go-to person has meant just as much to me as having you as mine. Thank you for that closeness.", featured: true },
+    { name: "Gorain Somen", role: "Lead", message: "Somehow you're the one holding every single call together, keeping the chaos organized. Thank you for managing all of it so well.", featured: false },
+    { name: "Behera Niranjan", role: "Lead", message: "You were the ITSM guru of this project, and things got noticeably harder to figure out after you left. Thank you for everything you taught us while you were here.", featured: false },
+    { name: "Kolli Murali Reddy", role: "Lead", message: "You've led this team with a steady hand, and it shows in how smoothly things run. Thank you for that leadership.", featured: false },
+    { name: "Rajkhowa Smita", role: "Manager", message: "On the Nextgen team, you're simply the person everyone turns to first. Thank you for being that guru, again and again.", featured: false },
+    { name: "Neeraj Srivastava", role: "Manager", message: "Leading the Nextgen team the way you do isn't easy, but you've made it look natural. Thank you for guiding that team so well.", featured: false },
+    { name: "Rajeev Kumar Sinha", role: "Manager", message: "Managing Nextgen while staying directly connected to the client is a tough balancing act, and you've made it work. Thank you for handling both so well.", featured: false },
+    { name: "Vellula Shiva Nageshwar Rao", role: "Teammate", message: "Watching you grow into someone who's clearly ready to lead has been genuinely nice to see. Thank you for the hard work behind that growth.", featured: false },
+    { name: "Vemula Balaji", role: "Teammate", message: "Your hard work hasn't gone unnoticed, and it's easy to see a lead role in your future. Thank you for putting in the effort that got you here.", featured: false },
+    { name: "Patnam Thejashwini", role: "Teammate", message: "You've just been a genuinely good-hearted person to have around this whole time. Thank you for that warmth.", featured: false },
+    { name: "Goli Nikitha", role: "Teammate", message: "Between your good heart and how much you know, you've been a real asset to this team. Thank you for both.", featured: false },
+    { name: "Mahender Alampally", role: "Teammate", message: "You've paired kindness with real knowledge, which is a rarer combination than people think. Thank you for bringing both to the team.", featured: false },
+    { name: "MuraliKrishna Mangali", role: "Teammate", message: "You've always come across as genuinely good-hearted, no pretense about it. Thank you for being that kind of person to work with.", featured: false },
+    { name: "Vishwa Prabath Atukula", role: "Teammate", message: "Between FinOps and CloudOps, you've covered a lot of ground, and you've done it as a genuinely good person the whole way. Thank you for that.", featured: false },
+    { name: "Priyanshu Rishi", role: "Teammate", message: "It's been good to watch you pick up automation as quickly as you have. Thank you for the effort behind that progress.", featured: false },
+    { name: "Raghav Sharma", role: "Teammate", message: "You've been picking up automation fast, and it shows in the work. Thank you for putting in that effort.", featured: false },
+    { name: "Vanshika Agarwalla", role: "Teammate", message: "You've been the kind of teammate who's simply always willing to help. Thank you for that reliability.", featured: false },
+    { name: "Supreetha MS", role: "Teammate", message: "Your joy is contagious, and I always liked knowing there was a fellow book lover on the team. Thank you for bringing both to work every day.", featured: false },
+    { name: "Krishna Cherekki", role: "Teammate", message: "Between your travel stories and your good heart, you've made the team a nicer place to be. Thank you for both.", featured: false },
+    { name: "Prajwalitha Sarikonda", role: "Teammate", message: "You were the first person on this project to actually make me feel welcome, and that mattered more than you probably realize. Thank you for that first friendly hand.", featured: false },
+    { name: "Srijith K", role: "Teammate", message: "You've been coming along really well in Nextgen, and it shows. Thank you for the work you've put into that.", featured: false },
+    { name: "Shahanaz Shaik", role: "Teammate", message: "Between the pet stories and how well you're doing in Nextgen, you've brought a nice mix of warmth and skill to the team. Thank you for both.", featured: false },
+    { name: "Aniruddha Patil", role: "Teammate", message: "You've always been kind and quick to help, without making a big deal of it. Thank you for that.", featured: false },
+    { name: "Dubey Harshitha", role: "Teammate", message: "Between settling into married life and holding down ITSM and CloudOps, you've had a full plate, and you've handled it well. Thank you, and congratulations again.", featured: false },
+    { name: "Kavya N", role: "Teammate", message: "You've only been here a few months, but you already feel like someone I've known a lot longer. Thank you for becoming close so quickly.", featured: false },
+    { name: "Mall Yash", role: "Fresher", message: "You're just getting started, and the hard work you're already putting in says a lot about where you're headed. Thank you for that effort.", featured: false },
+    { name: "Usha Vaishnavi Gundu", role: "Fresher", message: "You've brought real hard work to the table from day one. Thank you for that effort.", featured: false },
+    { name: "Lalasha Mulagapaka", role: "Fresher", message: "Your hard work hasn't gone unnoticed, even this early on. Thank you for bringing that energy.", featured: false },
+    { name: "Andavarapu Akhil", role: "Teammate", message: "Whenever OCP comes up, you're the first name people think of. Thank you for being that reliable.", featured: false },
+    { name: "Humberto", role: "Teammate", message: "You've been a genuinely good person to have in CloudOps, steady and easy to work with. Thank you for that.", featured: false },
+    { name: "Burkanov AI", role: "Teammate", message: "All the way from the US, you've been consistently helpful in NetworkOps, distance aside. Thank you for always showing up for the team.", featured: false },
+    { name: "Chambers Morzel", role: "Teammate", message: "Working from the US in CloudOps, you've still managed to be one of the more helpful people on the team. Thank you for that.", featured: false },
+    { name: "Jagadish Palacharla", role: "Teammate", message: "A fellow Telugu person holding down CloudOps all the way from the US, that's always been a nice connection. Thank you for the work and the familiarity both.", featured: false },
+    { name: "JayKrishna", role: "Teammate", message: "From the US, in NetworkOps, and always ready to help, that's been your reputation, and it's well earned. Thank you for it.", featured: false },
+    { name: "Gopi Krishna Sandhyala", role: "Teammate", message: "You've got this rare mix of being genuinely innocent-hearted and quietly knowledgeable at the same time. Thank you for both sides of that.", featured: false },
+    { name: "RaviKumar Gorle", role: "Teammate", message: "When it comes to AKS, you're the person everyone defers to. Thank you for being that dependable.", featured: false },
+    { name: "Manoj Gowda K", role: "Teammate", message: "EKS, AKS, GKE, OCP, you've somehow made yourself useful across all of it, which is no small feat. Thank you for being that kind of all-rounder.", featured: false },
+    { name: "Gupta Tvisha", role: "Teammate", message: "You've brought a gentle, helpful presence to NetworkOps that made the team easier to work with. Thank you for that softness, in the best sense of the word.", featured: false },
+    { name: "Hazra Dhritiman", role: "Teammate", message: "Watching you move from on-prem networking into cloud networking has been a good transition to see. Thank you for growing into it.", featured: false },
+    { name: "Johnson Lucas Gregory", role: "Teammate", message: "Somehow you've become the go-to person for pretty much everything, and I don't know how you manage that. Thank you for always being reachable.", featured: false },
+    { name: "Kalyan Ramagiri", role: "Teammate", message: "Your Terraform knowledge has quietly saved this project more than once. Thank you for that expertise.", featured: false },
+    { name: "Kumar Naveen", role: "Teammate", message: "You've been a steady, helpful presence in NetworkOps this whole time. Thank you for that.", featured: false },
+    { name: "Vinod Kumar", role: "Lead", message: "You're clearly on your way to an EKS manager role, and it's well deserved. Thank you for the work that's gotten you there.", featured: false },
+    { name: "Lakshmi Kanthi", role: "Lead", message: "Leading both ITSM and EKS at once is no small ask, and you've handled it well. Thank you for carrying both.", featured: false },
+    { name: "Luo Angie", role: "Lead", message: "Across OCP and AIOps, from the US side, you've brought real depth to both. Thank you for that range.", featured: false },
+    { name: "Mirzohid Mamasidikov", role: "Teammate", message: "Your OCP expertise from the US team made a real difference whenever things got tricky. Thank you for that knowledge.", featured: false },
+    { name: "Minaya Brian", role: "Lead", message: "You seem to lead a bit of everything around here, and somehow it all still gets done well. Thank you for carrying that load.", featured: false },
+    { name: "Vignesh P", role: "Teammate", message: "Another familiar face in NetOps, always dependable. Thank you for the work and the good company.", featured: false },
+    { name: "Patel Samir", role: "Teammate", message: "Bhai, you've been one of the most genuine, sweet-hearted people on this team, US timezone and all. Thank you for that.", featured: false },
+    { name: "Shyam Rajendren", role: "Teammate", message: "You've made yourself useful across just about everything from the US team's side. Thank you for that versatility.", featured: false },
+    { name: "Vishok Ranjan", role: "Teammate", message: "Watching you move from CloudOps into EKS and pick it up well has been good to see. Thank you for that adaptability.", featured: false },
+    { name: "Reddy Kurapati Srihari", role: "Teammate", message: "Between EKS and AIOps, you've become the person people go to first. Thank you for that reliability.", featured: false },
+    { name: "Daniel Reynaga Garcia", role: "Teammate", message: "Your grip on both network and cloud ops has made you one of the more valuable people to have around. Thank you for that expertise.", featured: false },
+    { name: "Sai Kumar Devineni", role: "Teammate", message: "When GKE questions come up, you're the person with the answer. Thank you for that expertise.", featured: false },
+    { name: "Salvi Aniruddha", role: "Teammate", message: "As one of the senior voices in NetworkOps, you've helped keep things steady. Thank you for that experience.", featured: false },
+    { name: "Schrader Austin", role: "Teammate", message: "You've made yourself useful across just about everything from the US side of things. Thank you for that range.", featured: false },
+    { name: "Jinna Hussain Shaik", role: "Teammate", message: "You're still early in this, and the progress you're making already says a lot. Thank you for the effort you're putting in.", featured: false },
+    { name: "Sowmya Penda", role: "Teammate", message: "That long commute home hasn't slowed you down one bit in EKS. Thank you for the effort you put in despite it.", featured: false },
+    { name: "Sampath Thirukkavalluri", role: "Teammate", message: "Another Telugu voice on the team, holding down EKS well. Thank you for the work and the familiarity.", featured: false },
+    { name: "Thomas Fredin", role: "Teammate", message: "Your networking expertise has been solid, and it's always nice having a fellow South Indian on the team too. Thank you for both.", featured: false },
+    { name: "Vamsi Chatla", role: "Teammate", message: "Watching you move from general IT into EKS and pick it up has been good to see. Thank you for that growth.", featured: false },
+    { name: "Marco Vazquez Garcia", role: "Teammate", message: "You've been a genuine hard worker from the US side of the team. Thank you for that effort.", featured: false },
+    { name: "Sreelakshmi K", role: "Teammate", message: "You held down EKS well while you were here, and the project felt it after you left. Thank you for the work you put in during your time on it.", featured: false },
+    { name: "Krishna D Gopi", role: "Teammate", message: "You never made much noise about it, but your good heart came through anyway. Thank you for that quiet kindness.", featured: false },
+    { name: "Prashanth Chandrashekhar", role: "Teammate", message: "You've been a genuinely good guy on the Nextgen team this whole time. Thank you for that, and here's hoping the 'single' part changes on your own timeline.", featured: false },
+    { name: "Chung Jason", role: "Teammate", message: "Between EKS and AIOps, you've covered a lot of ground well. Thank you for that range.", featured: false },
+    { name: "Venkata Visweswar Nittala", role: "Manager", message: "Vissu, you were the very first manager I had on this project, which makes you a bit of a starting point in this whole story. Thank you for that first chapter.", featured: false },
+    { name: "Rohan Deepak Sawant", role: "Teammate", message: "You've simply been a hard worker this whole time, no fuss about it. Thank you for that consistency.", featured: false },
+    { name: "Chhavi", role: "Coach", message: "Your coaching helped shape my career in ways I'm still benefiting from. Thank you for that guidance.", featured: false },
+    { name: "Mounika Savaraju", role: "College friend", message: "From college to Deloitte, you've been one of the constants through it all. Thank you for carrying that friendship this far.", featured: false },
+    { name: "Bandi Manasa", role: "College friend", message: "Having a college friend land at the same company has been one of the nicer surprises of these five years. Thank you for that continuity.", featured: false },
+    { name: "Usha Kovvada", role: "Buddy", message: "You joined just a year ago and somehow became my buddy fast, beach trips included. Thank you for that quick, easy friendship.", featured: false },
+    { name: "Satish Gopinath Kodag", role: "Teammate", message: "Mumbai to EKS, you've made a solid mark on this project. Thank you for that work.", featured: false },
+    { name: "Chiru Rohit", role: "Teammate", message: "You were the database guru of this project, and things got harder to figure out on that front after you left. Thank you for everything you taught us.", featured: false },
+    { name: "Abhishek K", role: "Teammate", message: "You've been my go-to partner in crime for automation, the person I actually enjoyed troubleshooting with. Thank you for that partnership.", featured: false },
+    { name: "Kadavergula Kamal", role: "Coach", message: "Your coaching played a real part in getting me promoted, and I haven't forgotten that. Thank you for backing me the way you did.", featured: false },
+    { name: "Seema Singh", role: "Lead", message: "You've simply been a good lead, straightforward and dependable. Thank you for that.", featured: false },
+    { name: "Ravi Chandra Cheeti", role: "Teammate", message: "You've made yourself useful across just about anything asked of you. Thank you for that versatility.", featured: false },
+    { name: "Hari Krishna Bajjuri", role: "Teammate", message: "Your work on EKS has been solid and dependable. Thank you for that.", featured: false },
+    { name: "Ganga Guguloth", role: "Outside friend", message: "Outside of work, you've been the friend I actually plan trips with, which says a lot. Thank you for the friendship that goes beyond the office.", featured: false },
+    { name: "Sai Sampath Yerra Ganesh", role: "Close friend", message: "Between the food hunts, the travel plans, and now waiting on your love marriage to come through, you've packed a lot of life into these years, and I've loved being around for it. You're one of the people I'll genuinely miss seeing every day. Thank you for being a real friend, not just a good teammate.", featured: true },
+    { name: "Meghana Poloju", role: "Close friend", message: "You work hard, you care harder, and the way you hold your family close while still connecting so easily with everyone around you says everything about who you are. You've made the hard days lighter and the good days better. Thank you for being that kind of person to know.", featured: true },
+    { name: "Divyasree Hanumanthu", role: "Close friend", message: "What started slowly turned into one of the closer friendships I've had here, the kind where we can talk about pretty much anything. Thank you for becoming that person, one regular conversation at a time.", featured: true },
+    { name: "Jyothi Thota Divya", role: "Close friend", message: "You've grown so much as a colleague, and watching that has genuinely made me happy. Whatever this influencer dream turns into, I have a feeling you'll make it work like you make everything else work. Thank you for being a good friend through all of it.", featured: true },
+    { name: "Lavanya Thammineni", role: "Close friend", message: "Sweet and kind-hearted in a way that's genuinely rare, you've got a love marriage to look forward to and a career I hope keeps climbing the way you deserve. Thank you for the friendship that never once felt like just a work relationship.", featured: true },
+    { name: "M Pramod Kumar Patra", role: "Manager", message: "You're the one who got ITSM started here in the first place, and everything since has built on that. Thank you for laying that groundwork.", featured: false },
+    { name: "Soutam Bagchi", role: "Lead", message: "You've kept ITSM running well under your lead. Thank you for that steady hand on it.", featured: false },
+    { name: "Peddi Reddy Deepika Rani", role: "Client Teammate", message: "Working with someone on the client side who felt like an actual teammate, not just a stakeholder, made all the difference. Thank you for making that collaboration genuinely easy.", featured: false },
+    { name: "Kommula Lakshmana Sai", role: "Teammate", message: "You've been a good person to know in your own right, though I'll admit knowing you're Jyothi's brother made it feel like I already knew you a little before we'd even properly met. Thank you for being part of this too.", featured: false },
+    { name: "Sowjanya Thammineni", role: "Teammate", message: "Lavanya's sister and a genuinely good person in your own right, you've been a nice part of this circle. Thank you for that.", featured: false },
+  ];
+
+  const grid = document.getElementById('wallGrid');
+  const countEl = document.getElementById('peopleCount');
+  const totalBtnEl = document.getElementById('totalCountBtn');
+  const search = document.getElementById('searchInput');
+  const showAllBtn = document.getElementById('showAllBtn');
+  const empty = document.getElementById('emptyState');
+  const rotations = [-1.1, 0.7, -0.5, 1.2, -0.8, 0.5];
+
+  function escapeHTML(str) {
+    return String(str).replace(/[&<>"']/g, s => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[s]));
+  }
+
+  function cardHTML(person, index, pos) {
+    const variant = index % 3;
+    const rot = rotations[index % rotations.length];
+    const delay = Math.min(pos * 0.05, 0.6);
+    return `
+      <button class="card card--v${variant}" style="--rot:${rot}deg; --cd:${delay}s" data-index="${index}" type="button">
+        <span class="dot" aria-hidden="true"></span>
+        <h3>${escapeHTML(person.name)}</h3>
+        <p class="cue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Tap to read the note
+        </p>
+      </button>`;
+  }
+
+  function renderTeam(list) {
+    grid.innerHTML = list.map(({ person, index }, pos) => cardHTML(person, index, pos)).join('');
+    empty.style.display = list.length ? 'none' : 'block';
+    grid.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => openModal(TEAM[Number(card.dataset.index)], card));
+    });
+  }
+
+  const allWithIndex = TEAM.map((person, index) => ({ person, index }));
+  const featuredWithIndex = allWithIndex.filter(({ person }) => person.featured);
+
+  countEl.textContent = TEAM.length;
+  totalBtnEl.textContent = TEAM.length;
+
+  let showAll = false;
+
+  function refresh() {
+    const query = search.value.trim().toLowerCase();
+    if (query) {
+      renderTeam(allWithIndex.filter(({ person }) => person.name.toLowerCase().includes(query)));
+    } else if (showAll) {
+      renderTeam(allWithIndex);
+    } else {
+      renderTeam(featuredWithIndex);
+    }
+  }
+  refresh();
+
+  search.addEventListener('input', refresh);
+
+  showAllBtn.addEventListener('click', () => {
+    showAll = !showAll;
+    showAllBtn.innerHTML = showAll
+      ? `Show just the close ${featuredWithIndex.length}`
+      : `Show all <span id="totalCountBtn">${TEAM.length}</span> people`;
+    refresh();
+  });
+
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalName = document.getElementById('modalName');
+  const modalRole = document.getElementById('modalRole');
+  const modalMessage = document.getElementById('modalMessage');
+  const modalClose = document.getElementById('modalClose');
+  let lastFocused = null;
+
+  function openModal(person, triggerEl) {
+    lastFocused = triggerEl || document.activeElement;
+    modalName.textContent = person.name;
+    modalRole.textContent = person.role || '';
+    modalMessage.textContent = person.message;
+    modalOverlay.classList.add('is-open');
+    document.body.classList.add('modal-open');
+    modalClose.focus();
+  }
+  function closeModal() {
+    modalOverlay.classList.remove('is-open');
+    document.body.classList.remove('modal-open');
+    if (lastFocused) lastFocused.focus();
+  }
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('is-open')) closeModal();
+  });
+
+  /* ================= Farewell reveal + finale trigger (fires both ways) ================= */
+  const fwLines = Array.from(document.querySelectorAll('.fw-line'));
+  if ('IntersectionObserver' in window) {
+    const io3 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = fwLines.indexOf(entry.target);
+          entry.target.style.transitionDelay = (idx * 0.18) + 's';
+          entry.target.classList.add('is-visible');
+          io3.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    fwLines.forEach(el => io3.observe(el));
+  } else {
+    fwLines.forEach(el => el.classList.add('is-visible'));
+  }
+
+});
+</script>
+
+</body>
+</html>
