@@ -406,6 +406,41 @@
   @media (prefers-reduced-motion: reduce) { .orbit-center { animation: none; } }
   .orbit-center:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
 
+  /* ---------- Feedback (typed on-page, private) ---------- */
+  .feedback { padding: 1rem clamp(1.5rem, 6vw, 5rem) 2.5rem; text-align: center; }
+  .feedback-lead { font-family: 'Fraunces', serif; font-weight: 600; margin-bottom: 1.1rem; color: var(--cream); font-size: 1.1rem; }
+  .feedback-form { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: .9rem; }
+  .feedback-input {
+    width: 100%; padding: .9rem 1.2rem; border-radius: 14px; border: 1px solid var(--line);
+    background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    transition: border-color .3s var(--ease-out), box-shadow .3s var(--ease-out);
+  }
+  .feedback-input::placeholder { color: var(--muted); }
+  .feedback-input:focus {
+    outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(46,242,255,0.18), 0 0 26px rgba(46,242,255,0.14);
+  }
+  .feedback-textarea {
+    width: 100%; padding: 1rem 1.2rem; border-radius: 14px; border: 1px solid var(--line);
+    background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Manrope', sans-serif;
+    font-size: 1rem; line-height: 1.5; resize: vertical; min-height: 100px;
+    transition: border-color .3s var(--ease-out), box-shadow .3s var(--ease-out);
+  }
+  .feedback-textarea::placeholder { color: var(--muted); }
+  .feedback-textarea:focus {
+    outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(46,242,255,0.18), 0 0 26px rgba(46,242,255,0.14);
+  }
+  .feedback-btn {
+    align-self: center; display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.8rem; border-radius: 999px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta)); color: var(--bg-deep); border: none;
+    font-weight: 700; font-size: .95rem; cursor: pointer; font-family: inherit;
+    transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+  }
+  .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,62,201,0.35); }
+  .feedback-btn:disabled { opacity: .65; cursor: default; transform: none; box-shadow: none; }
+  .feedback-status { min-height: 1.2em; color: var(--muted); font-size: .9rem; margin: 0; }
+  .feedback-note { margin-top: .9rem; color: var(--muted); font-size: .85rem; }
+
   /* ---------- Reflection quote ---------- */
   .reflection { padding: 1rem clamp(1.5rem, 6vw, 5rem) 2rem; max-width: 680px; margin: 0 auto; text-align: center; }
   .reflection-quote { margin: 0; }
@@ -530,6 +565,17 @@
   <blockquote class="reflection-quote">
     <p>Five years taught me this, if nothing else: no deadline is worth more than your health and wellbeing. Take care of yourself first &mdash; always.</p>
   </blockquote>
+</section>
+
+<section class="feedback reveal">
+  <p class="feedback-lead">Got feedback, or just something to share?</p>
+  <form id="feedbackForm" class="feedback-form">
+    <input type="text" id="feedbackName" class="feedback-input" placeholder="Your name">
+    <textarea id="feedbackMessage" class="feedback-textarea" placeholder="Type your note here&hellip;" rows="4" required></textarea>
+    <button type="submit" class="feedback-btn">Send it</button>
+    <p class="feedback-status" id="feedbackStatus" aria-live="polite"></p>
+  </form>
+  <p class="feedback-note">Only I can see what's submitted here.</p>
 </section>
 
 <section class="contact">
@@ -970,6 +1016,54 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalOverlay.classList.contains('is-open')) closeModal();
   });
+
+  /* ================= Private feedback form (Web3Forms) ================= */
+  // Get a free access key at https://web3forms.com — paste it below in place of the placeholder.
+  const FEEDBACK_ACCESS_KEY = '2e6d016c-150e-4071-bd13-19babd22fd10';
+  const feedbackForm = document.getElementById('feedbackForm');
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById('feedbackName');
+      const textarea = document.getElementById('feedbackMessage');
+      const statusEl = document.getElementById('feedbackStatus');
+      const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+      const name = nameInput.value.trim();
+      const msg = textarea.value.trim();
+      if (!msg) return;
+
+      submitBtn.disabled = true;
+      statusEl.textContent = 'Sending\u2026';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: FEEDBACK_ACCESS_KEY,
+            subject: 'New note on the thank-you page',
+            name: name || 'Anonymous',
+            message: msg
+          })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          statusEl.textContent = 'Sent \u2014 thank you.';
+          nameInput.value = '';
+          textarea.value = '';
+          nameInput.disabled = true;
+          textarea.disabled = true;
+          submitBtn.textContent = 'Sent';
+        } else {
+          statusEl.textContent = 'Something went wrong \u2014 please try again in a moment.';
+          submitBtn.disabled = false;
+        }
+      } catch (err) {
+        statusEl.textContent = 'Something went wrong \u2014 please try again in a moment.';
+        submitBtn.disabled = false;
+      }
+    });
+  }
 
   /* ================= Farewell reveal + finale trigger (fires both ways) ================= */
   const fwLines = Array.from(document.querySelectorAll('.fw-line'));
